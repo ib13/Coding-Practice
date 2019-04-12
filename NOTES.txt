@@ -1,0 +1,9 @@
+-> In case of adjacency list cost of prim's and dijkstra algo are ElogV so used for spare graph. If used for dense graph then approx V^2logV.
+-> In case of adjacency matrix cost of prim's and dijkstra algo are V^2 so used for dense graph.
+-> In case of Dynamic Programming we store the previous results(called memoization) so that next time if it is needed then we can use it directly.
+-> We use top down approach in memoization or dp.
+-> We generally use iterative method in dp.
+-> Principle of optimality says that a problem should be solved in sequence of decisions.
+-> In Floyd Warshall All Pair Shortest Path we use dp.
+-> Here we use previous matrix and check if the node we have taken through which it can go is greater than or not.
+-> In case of linked list if fast pointer always check for 1 next and then 2 next.
