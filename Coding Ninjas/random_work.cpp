@@ -1,19 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void sample(int n)
+// array value change
+void f1(int b[], int c)
 {
-    for (int p = n; p > 0; p = p / 2)
-    {
-        for (int q = 0; q < p; q++)
-        {
-            // cout << p << " " << q;
-        }
-    }
+    // cout << sizeof(b);
+    b[0] = 1;
+    c = 6;
 }
 
 int main()
 {
-    sample(1000000000);
+    int b[] = {0, 2, 3};
+    int c = 5;
+    f1(b, c);
+    cout << sizeof(b);
+    cout << b[0] << c;
     return 0;
 }
