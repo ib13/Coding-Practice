@@ -1,0 +1,1 @@
+see dynamic vs static memory allocation
