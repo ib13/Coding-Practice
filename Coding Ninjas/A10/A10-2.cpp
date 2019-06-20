@@ -1,40 +1,22 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
-#include <bits/stdc++.h>
-#include <unordered_map>
-#define mod (10e9 + 7)
-unordered_map<string, int> m;
-long long int getCodes(string input)
+
+long long int countDecodingDP(string digits, long long int n)
 {
-    if (input.length() <= 1)
-    {
-        return 1;
-    }
-    long long int c1;
-    if (m[input.substr(1)] > 0)
-        c1 = m[input.substr(1)];
-    else
-    {
-        c1 = getCodes(input.substr(1));
-        m[input.substr(1)] = c1;
-    }
+    long long int count[n + 1];
+    count[0] = 1;
+    count[1] = 1;
 
-    long long int c2;
-    long long int intval2 = (input[0] - '0') * 10 + input[1] - '0';
-    if (intval2 <= 26)
+    for (int i = 2; i <= n; i++)
     {
-        if (m[input.substr(2)] > 0)
-            c2 = m[input.substr(2)];
-        else
-        {
-            c2 = getCodes(input.substr(2));
-            m[input.substr(2)] = c2;
-        }
+        count[i] = 0;
+        if (digits[i - 1] > '0')
+            count[i] = count[i - 1] % ((long long int)(1000000007));
+        if (digits[i - 2] == '1' || (digits[i - 2] == '2' && digits[i - 1] < '7'))
+            count[i] = (count[i] % ((long long int)(1000000007)) + count[i - 2] % ((long long int)(1000000007))) % ((long long int)(1000000007));
     }
-    else
-        c2 = 0;
-
-    return (c1 % ((long long int)mod) + c2 % ((long long int)mod)) % ((long long int)mod);
+    return count[n];
 }
 
 int main()
@@ -45,7 +27,8 @@ int main()
         cin >> input;
         if (input != "0")
         {
-            long long int count = getCodes(input);
+            long long int len = input.length();
+            long long int count = countDecodingDP(input, len);
             cout << count << endl;
         }
     }

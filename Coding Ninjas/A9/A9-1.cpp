@@ -43,19 +43,18 @@ bool sudokuSolverHelper(int board[][9])
         }
     }
     if (!zeroexist)
-        return true;
-
-    if (x == 8 && y == 8)
     {
-        for (int i = 1; i <= 9; i++)
+        // Print sudoku(not part of question)
+        cout << "Your Final sudoku is:" << endl;
+        for (int i = 0; i < 9; i++)
         {
-            if (checkSudoku(board, x, y, i))
+            for (int j = 0; j < 9; j++)
             {
-                board[x][y] = i;
-                return true;
+                cout << board[i][j] << " ";
             }
+            cout << endl;
         }
-        return false;
+        return true;
     }
 
     for (int i = 1; i <= 9; i++)
