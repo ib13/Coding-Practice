@@ -3,3 +3,6 @@ Time Complexity - https://www.youtube.com/watch?v=9TlHvipP5yA
 		  	     https://www.youtube.com/watch?v=9SgLBjXqwd4
 
 unordered_map - https://www.youtube.com/watch?v=qOHXdhtxyyQ
+
+Ways to implement palindrome in LL
+https://www.geeksforgeeks.org/function-to-check-if-a-singly-linked-list-is-palindrome/
