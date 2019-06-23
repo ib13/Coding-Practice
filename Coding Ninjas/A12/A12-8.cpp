@@ -19,6 +19,8 @@ node *swap_nodes(node *head, int i, int j)
     int maxval = max(i, j);
     node *temp1 = head;
     node *temp2 = head;
+    node *temp3 = head;
+    node *temp4 = head;
     if (minval == 0)
     {
         while ((maxval - 1) != 0)
@@ -26,11 +28,35 @@ node *swap_nodes(node *head, int i, int j)
             temp1 = temp1->next;
             maxval--;
         }
-        temp2 = temp1->next;
-        head->next = temp1->next->next;
-        temp2->next = head;
-        head = temp1;
+        temp4 = head;
+        temp3 = temp1->next;
+        temp1->next = temp4;
+        temp1 = temp3->next;
+        temp3->next = temp4->next;
+        temp4->next = temp1;
+        head = temp3;
     }
+    else
+    {
+        while ((maxval - 1) != 0)
+        {
+            temp1 = temp1->next;
+            maxval--;
+        }
+        while ((minval - 1) != 0)
+        {
+            temp2 = temp2->next;
+            minval--;
+        }
+        temp3 = temp1->next;
+        temp4 = temp2->next;
+        temp1->next = temp4;
+        temp2->next = temp3;
+        temp1 = temp3->next;
+        temp3->next = temp4->next;
+        temp4->next = temp1;
+    }
+    return head;
 }
 node *takeinput()
 {

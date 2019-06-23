@@ -80,3 +80,12 @@ using namespace std;
 //     int num = 3;
 //     print(num);
 // }
+int main()
+{
+
+    const int p = 5;
+    int const *q = &p;
+    p++;
+    q++;
+    (*q)++;
+}
