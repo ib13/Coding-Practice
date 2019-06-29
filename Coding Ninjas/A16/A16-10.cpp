@@ -32,12 +32,46 @@ public:
 };
 
 using namespace std;
-
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 vector<node<int> *> createLLForEachLevel(BinaryTreeNode<int> *root)
 {
-    // Write your code here
+    vector<node<int> *> v;
+    queue<BinaryTreeNode<int> *> q;
+    q.push(root);
+    node<int> *head;
+    node<int> *tail;
+    while (!q.empty())
+    {
+        int val = q.size();
+        head = NULL;
+        tail = NULL;
+        for (int i = 0; i < val; i++)
+        {
+            BinaryTreeNode<int> *temp = q.front();
+            q.pop();
+            node<int> *newNode = new node<int>(temp->data);
+            if (head == NULL)
+            {
+                head = newNode;
+                tail = head;
+            }
+            else
+            {
+                tail->next = newNode;
+                tail = tail->next;
+            }
+            if (temp->left)
+                q.push(temp->left);
+            if (temp->right)
+                q.push(temp->right);
+        }
+        v.push_back(head);
+    }
+    return v;
 }
-
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 BinaryTreeNode<int> *takeInput()
 {
     int rootData;
