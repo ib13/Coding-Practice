@@ -1,6 +1,18 @@
 #include <iostream>
-#include <vector>
 #include <queue>
+
+template <typename T>
+class Node
+{
+public:
+    T data;
+    Node<T> *next;
+    Node(T data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
 
 template <typename T>
 class BinaryTreeNode
@@ -21,40 +33,36 @@ public:
 using namespace std;
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
-#include <algorithm>
-using namespace std;
-int height(BinaryTreeNode<int> *root)
+void insertToLL(int data, Node<int> *&head, Node<int> *&tail)
 {
-    if (root == NULL)
-        return 0;
-    int hleft, hright;
-    hleft = height(root->left);
-    hright = height(root->right);
-    return 1 + max(hleft, hright);
-}
-
-void longestPathHelper(BinaryTreeNode<int> *root, vector<int> *temp, vector<int> *final, int h)
-{
-    if (root == NULL)
+    Node<int> *newNode = new Node<int>(data);
+    if (head == NULL)
     {
-        if (temp->size() == h)
-            *final = *temp;
-        return;
+        head = newNode;
+        tail = head;
     }
-    temp->push_back(root->data);
-    longestPathHelper(root->left, temp, final, h);
-    longestPathHelper(root->right, temp, final, h);
-    temp->pop_back();
+    else
+    {
+        tail->next = newNode;
+        tail = tail->next;
+    }
 }
 
-vector<int> *longestPath(BinaryTreeNode<int> *root)
+void BSTToLL(BinaryTreeNode<int> *root, Node<int> *&head, Node<int> *&tail)
 {
-    vector<int> *temp = new vector<int>;
-    vector<int> *final = new vector<int>;
-    int h = height(root);
-    longestPathHelper(root, temp, final, h);
-    reverse(final->begin(), final->end());
-    return final;
+    if (root == NULL)
+        return;
+    BSTToLL(root->left, head, tail);
+    insertToLL(root->data, head, tail);
+    BSTToLL(root->right, head, tail);
+}
+
+Node<int> *constructBST(BinaryTreeNode<int> *root)
+{
+    Node<int> *head = NULL;
+    Node<int> *tail = NULL;
+    BSTToLL(root, head, tail);
+    return head;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -98,11 +106,10 @@ BinaryTreeNode<int> *takeInput()
 int main()
 {
     BinaryTreeNode<int> *root = takeInput();
-    vector<int> *output = longestPath(root);
-    vector<int>::iterator i = output->begin();
-    while (i != output->end())
+    Node<int> *head = constructBST(root);
+    while (head != NULL)
     {
-        cout << *i << endl;
-        i++;
+        cout << head->data << " ";
+        head = head->next;
     }
 }

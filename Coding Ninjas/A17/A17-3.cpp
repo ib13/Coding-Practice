@@ -58,14 +58,14 @@ bool isBSTHelper(BinaryTreeNode<int> *root, int minval, int maxval)
 {
     if (root == NULL)
         return true;
-    if (maxval < root->data && minval > root->data && isBSTHelper(root->left, minval, max(maxval, root->data)) && isBSTHelper(root->right, min(minval, root->data), maxval))
+    if (root->data >= minval && root->data <= maxval && isBSTHelper(root->left, minval, root->data - 1) && isBSTHelper(root->right, root->data + 1, maxval))
         return true;
     return false;
 }
 
 bool isBST(BinaryTreeNode<int> *root)
 {
-    return isBSTHelper(root, INT_MAX, INT_MIN);
+    return isBSTHelper(root, INT_MIN, INT_MAX);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

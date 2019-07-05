@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <queue>
 
 template <typename T>
@@ -21,40 +20,20 @@ public:
 using namespace std;
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
-#include <algorithm>
-using namespace std;
-int height(BinaryTreeNode<int> *root)
+BinaryTreeNode<int> *constructTreeHelper(int *input, int start, int end)
 {
-    if (root == NULL)
-        return 0;
-    int hleft, hright;
-    hleft = height(root->left);
-    hright = height(root->right);
-    return 1 + max(hleft, hright);
+    if (start > end)
+        return NULL;
+    int mid = (start + end) / 2;
+    BinaryTreeNode<int> *root = new BinaryTreeNode<int>(input[mid]);
+    root->left = constructTreeHelper(input, start, mid - 1);
+    root->right = constructTreeHelper(input, mid + 1, end);
+    return root;
 }
 
-void longestPathHelper(BinaryTreeNode<int> *root, vector<int> *temp, vector<int> *final, int h)
+BinaryTreeNode<int> *constructTree(int *input, int n)
 {
-    if (root == NULL)
-    {
-        if (temp->size() == h)
-            *final = *temp;
-        return;
-    }
-    temp->push_back(root->data);
-    longestPathHelper(root->left, temp, final, h);
-    longestPathHelper(root->right, temp, final, h);
-    temp->pop_back();
-}
-
-vector<int> *longestPath(BinaryTreeNode<int> *root)
-{
-    vector<int> *temp = new vector<int>;
-    vector<int> *final = new vector<int>;
-    int h = height(root);
-    longestPathHelper(root, temp, final, h);
-    reverse(final->begin(), final->end());
-    return final;
+    return constructTreeHelper(input, 0, n - 1);
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -95,14 +74,26 @@ BinaryTreeNode<int> *takeInput()
     return root;
 }
 
+void preOrder(BinaryTreeNode<int> *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    cout << root->data << " ";
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
 int main()
 {
-    BinaryTreeNode<int> *root = takeInput();
-    vector<int> *output = longestPath(root);
-    vector<int>::iterator i = output->begin();
-    while (i != output->end())
-    {
-        cout << *i << endl;
-        i++;
-    }
+    int size;
+    cin >> size;
+    int *input = new int[1 + size];
+
+    for (int i = 0; i < size; i++)
+        cin >> input[i];
+
+    BinaryTreeNode<int> *root = constructTree(input, size);
+    preOrder(root);
 }
