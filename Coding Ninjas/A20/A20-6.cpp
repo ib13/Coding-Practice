@@ -1,23 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void printDFS(int **adjacencyMatrix, int V, int sv, int visited[])
+void printDFS(int **adjacencyMatrix, int V, int sv, int visited[], vector<int> &v)
 {
-    cout << sv << " ";
+    v.push_back(sv);
     visited[sv] = 1;
     for (int i = 0; i < V; i++)
     {
         if (adjacencyMatrix[i][sv] == 1 && visited[i] == 0)
-            printDFS(adjacencyMatrix, V, i, visited);
+            printDFS(adjacencyMatrix, V, i, visited, v);
     }
 }
 
 int main()
 {
-    int V;
-    int E;
-    cin >> V;
-    cin >> E;
+    int V, E, tempX, tempY;
+    cin >> V >> E;
     int **adjacencyMatrix = new int *[V];
     for (int i = 0; i < V; i++)
     {
@@ -35,8 +33,20 @@ int main()
         adjacencyMatrix[v2][v1] = 1;
     }
     int visited[V] = {0};
-    printDFS(adjacencyMatrix, V, 0, visited);
+    vector<int> v;
+    for (int i = 0; i < V; i++)
+    {
+        if (!visited[i])
+        {
+            printDFS(adjacencyMatrix, V, i, visited, v);
+            sort(v.begin(), v.end());
+            for (int i = 0; i < v.size(); i++)
+            {
+                cout << v[i] << " ";
+            }
+            v.clear();
+            cout << endl;
+        }
+    }
     return 0;
 }
-
-// 5 6 0 1 0 2 1 3 3 2 3 4 2 4
