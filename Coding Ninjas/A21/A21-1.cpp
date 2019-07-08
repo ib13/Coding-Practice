@@ -15,6 +15,22 @@ public:
     }
 };
 
+pair<int, int> findParent(int v1, int v2, int parent[])
+{
+    while (parent[v1] != v1)
+    {
+        v1 = parent[v1];
+    }
+    while (parent[v2] != v2)
+    {
+        v2 = parent[v2];
+    }
+    pair<int, int> p;
+    p.first = v1;
+    p.second = v2;
+    return p;
+}
+
 bool sortByWeight(Edge &A, Edge &B)
 {
     return (A.weight < B.weight);
@@ -55,9 +71,20 @@ int main()
     int count = 0;
     for (int i = 0; i < E; i++)
     {
-        if (!isParent(inputEdge[i].v1, inputEdge[i].v2, parent))
+        if (count == V - 1)
+            break;
+        pair<int, int> p;
+        p = findParent(inputEdge[i].v1, inputEdge[i].v2, parent);
+        if (p.first != p.second)
         {
+            parent[p.first] = p.second;
+            outputEdge[count++] = inputEdge[i];
         }
+    }
+
+    for (int i = 0; i < V - 1; i++)
+    {
+        cout << outputEdge[i].v1 << " " << outputEdge[i].v2 << " " << outputEdge[i].weight << endl;
     }
 
     return 0;
