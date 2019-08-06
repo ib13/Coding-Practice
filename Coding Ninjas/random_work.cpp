@@ -147,7 +147,17 @@ using namespace std;
 //     printTree(root);
 // }
 
+void bin(unsigned n)
+{
+    unsigned i;
+    for (i = 1 << 31; i > 0; i = i / 2)
+        (n & i) ? printf("1") : printf("0");
+}
+
 int main()
 {
-    vector<vector<int> *> v;
+    int x = 0xAAAAAAAA;
+    bin(x);
+    cout << endl;
+    bin(64);
 }
